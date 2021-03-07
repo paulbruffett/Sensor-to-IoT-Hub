@@ -19,7 +19,6 @@ const char ssid[]        = SECRET_SSID;
 const char pass[]        = SECRET_PASS;
 const char broker[]      = SECRET_BROKER;
 String     deviceId      = SECRET_DEVICEID;
-int led_state = 0;
 
 int status = WL_IDLE_STATUS;
 
@@ -57,8 +56,6 @@ void setup() {
   // Set the client id used for MQTT as the device id
   mqttClient.setId(deviceId);
 
-
-
   mqttClient.setUsernamePassword(SECRET_USERNAME, SECRET_PASSWORD);
 
   // Set the message callback, this function is
@@ -86,14 +83,6 @@ void loop() {
   mqttClient.poll();
 
   publishMessage();
-
-  if(led_state == 0){  
-  digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
-  led_state =1;
-  } else {
-    digitalWrite(LED_BUILTIN, LOW);   // turn the LED on (HIGH is the voltage level)
-    led_state = 0;
-  }
   
 
   // wait one minute
