@@ -1,27 +1,17 @@
 #include "arduino_secrets.h"
-/*
-  Azure IoT Hub WiFi
 
-  This sketch securely connects to an Azure IoT Hub using MQTT over WiFi.
-  It uses a private key stored in the ATECC508A and a self signed public
-  certificate for SSL/TLS authetication.
-
-  It publishes a message every 5 seconds to "devices/{deviceId}/messages/events/" topic
-  and subscribes to messages on the "devices/{deviceId}/messages/devicebound/#"
-  topic.
-
-  The circuit:
-  - Arduino MKR WiFi 1010 or MKR1000
-
-  This example code is in the public domain.
-*/
-#include <ArduinoLowPower.h>
+//to generate certs for auth
 #include <ArduinoBearSSL.h>
 #include <ArduinoECCX08.h>
 #include <utility/ECCX08SelfSignedCert.h>
+
+//mqtt client to connect to the cloud
 #include <ArduinoMqttClient.h>
 #include <WiFiNINA.h> // change to #include <WiFi101.h> for MKR1000
+
+//sensor library
 #include <Arduino_MKRENV.h>
+
 #include <ArduinoJson.h>
 
 /////// Enter your sensitive data in arduino_secrets.h
@@ -37,7 +27,6 @@ WiFiClient    wifiClient;            // Used for the TCP socket connection
 BearSSLClient sslClient(wifiClient); // Used for SSL/TLS connection, integrates with ECC508
 MqttClient    mqttClient(sslClient);
 
-unsigned long lastEpoch = 0;
 
 void setup() {
 
@@ -80,7 +69,7 @@ void setup() {
     Serial.println(ssid);
     // Connect to WPA/WPA2 network. Change this line if using open or WEP network:
     status = WiFi.begin(ssid, pass);
-    // WiFi.lowPowerMode();  // ENABLE WiFi Low Power Mode
+
     delay(5000);
   }
 }
