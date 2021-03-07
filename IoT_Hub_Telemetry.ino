@@ -29,6 +29,7 @@ MqttClient    mqttClient(sslClient);
 
 
 void setup() {
+  Serial.begin(9600);
 
   if (!ENV.begin()) {
     Serial.println("Failed to initialize MKR ENV shield!");
